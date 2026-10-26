@@ -13,7 +13,6 @@ public class Doble extends JFrame
 
     //Etiquetas para identificar los campos de texto
     private JLabel numeroLabel;
-    private JLabel nombreLabel;
     private JLabel dobleLabel;
 
     //Cadenas para las etiquetas
@@ -22,12 +21,9 @@ public class Doble extends JFrame
 
     //Text fields para introducir números (ahora son de Swing: JTextField)
     private JTextField numeroField;
-    private JTextField nombreField;
     private JTextField dobleField;
 
     private boolean focusIsSet = false;
-    private JButton atrasB;
-    private JButton siguienteB;
 
     public Doble() {
         super("Doble");
@@ -100,9 +96,26 @@ public class Doble extends JFrame
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 final Doble app = new Doble();
+
+                //Este WindowListener ya solo sirve para poner el foco.
+                //(Para cerrar la ventana ya no hace falta: setDefaultCloseOperation.)
+                app.addWindowListener(new WindowAdapter() {
+                    //Pone el focus (foco de atencion)
+                    public void windowActivated(WindowEvent e) {
+                        app.setFocus();
+                    }
+                });
                 app.pack();
                 app.setVisible(true);
             }
         });
     }
+
+    private void setFocus() {
+        if (!focusIsSet) {
+            numeroField.requestFocusInWindow();
+            focusIsSet = true;
+        }
+    }
+
 }
